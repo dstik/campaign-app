@@ -35,7 +35,7 @@
     <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
   </head>
 
-  <body>
+  <body class="body">
     <div class="upload_outer">
       <div class="upload_box">
         <?php echo form_open_multipart('/upload/upload_file', array('class' => 'form-upload', 'id' => 'upload_file'));?>
