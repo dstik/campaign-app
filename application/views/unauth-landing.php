@@ -78,29 +78,36 @@
 
       <hr>
 
-      <div class="row-fluid marketing">
-        <div class="span6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
-
-        <div class="span6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
-      </div>
+      <?
+      $item_counter = 0;
+      for($i_count = 0; $i_count < count($recentItems); $i_count++) {
+        $item_counter++;
+        if($item_counter == 1) {
+        ?>
+          <div class="row-fluid item_list">
+        <?
+        }
+        ?>
+        <div class="span6 item_data">
+          <h4>
+            <a href="<?= base_url("item/index/".$recentItems[$i_count]['id']) ?>"><?= $recentItems[$i_count]['title'] ?></a>
+          </h4>
+          <p class="item_img">
+            <a href="<?= base_url("item/index/".$recentItems[$i_count]['id']) ?>">
+              <img align="middle" src="<?= base_url("/files/".$recentItems[$i_count]['filename']) ?>" alt="<?= $recentItems[$i_count]['title'] ?>" />
+            </a>
+          </p>
+          <p><a class="btn" href="<?= base_url("item/index/".$recentItems[$i_count]['id']) ?>">View <?= $fbconfig['itemObjectType'] ?> &raquo;</a></p>
+        </div><!--/span-->
+        <?
+        if($item_counter == 2 || ($i_count == count($recentItems) -1)) {
+          $item_counter = 0;
+        ?>
+          </div><!-- /row -->
+        <?
+        }
+      }
+      ?>
 
       <hr>
 

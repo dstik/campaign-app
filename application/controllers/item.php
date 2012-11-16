@@ -66,6 +66,8 @@ class Item extends CI_Controller {
 	    show_error(print_r($e, TRUE), 500);
 	  }
 
+    $recentItems = $this->Itemmodel->getRecentItems();
+
     $data = array(
       'brand_name' => $this->config->item('brand_name'),
       'app_name' => $this->config->item('app_name'),
@@ -76,7 +78,8 @@ class Item extends CI_Controller {
       'user_pic' => $user_pic,
       'itemData' => $item,
       'item_user' => $item_user,
-      'item_user_pic' => $item_user_pic
+      'item_user_pic' => $item_user_pic,
+      'recentItems' => $recentItems
     );
 
 		$this->load->view('item-profile', $data);
