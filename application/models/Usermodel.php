@@ -75,7 +75,7 @@ class Usermodel extends CI_Model {
 
     function getFriends($id) {
         $friend_array = array();
-        $query = $this->db->query("SELECT friends.user_id, friends.friend_id, users.first_name, users.last_name FROM friends, users WHERE (friends.user_id = ".$this->db->escape($id)." OR friends.friend_id = ".$this->db->escape($id).") AND friends.friend_id = users.fb_user_id");
+        $query = $this->db->query("SELECT friends.user_id, friends.friend_id, users.first_name, users.last_name FROM friends, users WHERE friends.user_id = ".$this->db->escape($id)." AND friends.friend_id = users.fb_user_id");
         if ($query->num_rows() > 0) {
           foreach ($query->result_array() as $row) {
             array_push($friend_array, array(

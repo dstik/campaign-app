@@ -53,29 +53,32 @@
         </form>
       </div>
     </div>
+
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="<?= base_url("/welcome") ?>"><?= $app_name ?></a>
-          <div class="nav-collapse collapse">
-            <p class="navbar-text pull-right loggedinas">
-              Logged in as <a href="<?= base_url("/user/index/".$user['id']) ?>" class="navbar-link">
-                <img src="<?= $user_pic['picture']['data']['url'] ?>" />
-                <?= $user['name'] ?>
-              </a>
-            </p>
-            <ul class="nav">
-              <li><a href="<?= base_url("/welcome") ?>">Home</a></li>
-              <li><a href="#" id="upload_btn">Upload</a></li>
-              <li><a href="#about">About</a></li>
+        <a class="brand" href="<?= base_url("/welcome") ?>"><?= $app_name ?></a>
+        <ul class="nav">
+          <li><a href="<?= base_url("/welcome") ?>">Home</a></li>
+          <li><a href="#" id="upload_btn">Upload</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+        <ul class="nav pull-right rightmenu">
+          <li id="fat-menu" class="dropdown">
+            <a href="#" id="drop3" role="button" class="navbar-link dropdown-toggle loggedinas" data-toggle="dropdown">
+              <!-- <a href="<?= base_url("/user/index/".$user['id']) ?>" class="" data-toggle="dropdown"> -->
+              <img src="<?= $user_pic['picture']['data']['url'] ?>" alt="<?= $user['name'] ?>" />
+              <?= $user['name'] ?>
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+              <li><a tabindex="-1" href="<?= base_url("/user/index/".$user['id']) ?>">Profile</a></li>
+              <li class="divider"></li>
+              <li><a tabindex="-1" href="#">Privacy</a></li>
+              <li><a tabindex="-1" href="#">Something else here</a></li>
+              <li><a tabindex="-1" href="#">Separated link</a></li>
             </ul>
-          </div><!--/.nav-collapse -->
-        </div>
+          </li>
+        </ul>
       </div>
     </div>
 
@@ -83,8 +86,13 @@
       <div class="row-fluid">
         <div class="span9">
           <div class="hero-unit">
-            <h1><?= $profile_user['first_name'] ?>'s Profile</h1>
-            <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+            <h1>
+              <div class="userphoto">
+                <span style="background-image: url(<?= $profile_user_pic['picture']['data']['url'] ?>)"></span>
+              <?= $profile_user['first_name'] ?>'s Profile
+              </div>
+            </h1>
+            <p>This is a template for a user profile page. You can put any sort of user description or copy here to describe a user and their activities using your service</p>
           </div>
           <?
           $item_counter = 0;
@@ -97,9 +105,15 @@
             }
             ?>
             <div class="span4 item_data">
-              <h2><?= $profile_user_items[$i_count]['title'] ?></h2>
+              <h2>
+                <a href="<?= base_url("item/index/".$profile_user_items[$i_count]['id']) ?>">
+                  <?= $profile_user_items[$i_count]['title'] ?>
+                </a>
+              </h2>
               <p class="item_img">
-                <img align="middle" src="<?= base_url("/files/".$profile_user_items[$i_count]['filename']) ?>" alt="<?= $profile_user_items[$i_count]['title'] ?>" />
+                <a href="<?= base_url("item/index/".$profile_user_items[$i_count]['id']) ?>">
+                  <img align="middle" src="<?= base_url("/files/".$profile_user_items[$i_count]['filename']) ?>" alt="<?= $profile_user_items[$i_count]['title'] ?>" />
+                </a>
               </p>
               <p><a class="btn" href="<?= base_url("item/index/".$profile_user_items[$i_count]['id']) ?>">View <?= $fbconfig['itemObjectType'] ?> &raquo;</a></p>
             </div><!--/span-->

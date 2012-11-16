@@ -66,7 +66,7 @@ class Item extends CI_Controller {
 	    show_error(print_r($e, TRUE), 500);
 	  }
 
-    $recentItems = $this->Itemmodel->getRecentItems();
+    $recentItems = $this->Itemmodel->getRecentItems($item_id);
 
     $data = array(
       'brand_name' => $this->config->item('brand_name'),

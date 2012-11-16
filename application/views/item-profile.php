@@ -59,29 +59,32 @@
         </form>
       </div>
     </div>
+
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="<?= base_url("/welcome") ?>"><?= $app_name ?></a>
-          <div class="nav-collapse collapse">
-            <p class="navbar-text pull-right loggedinas">
-              Logged in as <a href="<?= base_url("/user/index/".$user['id']) ?>" class="navbar-link">
-                <img src="<?= $user_pic['picture']['data']['url'] ?>" />
-                <?= $user['name'] ?>
-              </a>
-            </p>
-            <ul class="nav">
-              <li><a href="<?= base_url("/welcome") ?>">Home</a></li>
-              <li><a href="#" id="upload_btn">Upload</a></li>
-              <li><a href="#about">About</a></li>
+        <a class="brand" href="<?= base_url("/welcome") ?>"><?= $app_name ?></a>
+        <ul class="nav">
+          <li><a href="<?= base_url("/welcome") ?>">Home</a></li>
+          <li><a href="#" id="upload_btn">Upload</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+        <ul class="nav pull-right rightmenu">
+          <li id="fat-menu" class="dropdown">
+            <a href="#" id="drop3" role="button" class="navbar-link dropdown-toggle loggedinas" data-toggle="dropdown">
+              <!-- <a href="<?= base_url("/user/index/".$user['id']) ?>" class="" data-toggle="dropdown"> -->
+              <img src="<?= $user_pic['picture']['data']['url'] ?>" alt="<?= $user['name'] ?>" />
+              <?= $user['name'] ?>
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+              <li><a tabindex="-1" href="<?= base_url("/user/index/".$user['id']) ?>">Profile</a></li>
+              <li class="divider"></li>
+              <li><a tabindex="-1" href="#">Privacy</a></li>
+              <li><a tabindex="-1" href="#">Something else here</a></li>
+              <li><a tabindex="-1" href="#">Separated link</a></li>
             </ul>
-          </div><!--/.nav-collapse -->
-        </div>
+          </li>
+        </ul>
       </div>
     </div>
 
@@ -103,7 +106,10 @@
                 </p>
               </div>
               <div class="span4 item_pic">
-                <img src="<?= base_url("/files/".$itemData['filename']) ?>" alt="<?= $itemData['title'] ?>" />
+                <a href="<?= base_url("/files/".$itemData['filename']) ?>" target="_blank">
+                  <img src="<?= base_url("/files/".$itemData['filename']) ?>" alt="<?= $itemData['title'] ?>" />
+                </a>
+                <h5>(Click to Enlarge)</h5>
               </div>
             </div>
           </div>
@@ -123,9 +129,14 @@
             }
             ?>
             <div class="span4 item_data">
-              <h2><?= $recentItems[$i_count]['title'] ?></h2>
+              <h3>
+                <a href="<?= base_url("item/index/".$recentItems[$i_count]['id']) ?>">
+                  <?= $recentItems[$i_count]['title'] ?></h3>
+                </a>
               <p class="item_img">
-                <img align="middle" src="<?= base_url("/files/".$recentItems[$i_count]['filename']) ?>" alt="<?= $recentItems[$i_count]['title'] ?>" />
+                <a href="<?= base_url("item/index/".$recentItems[$i_count]['id']) ?>">
+                  <img align="middle" src="<?= base_url("/files/".$recentItems[$i_count]['filename']) ?>" alt="<?= $recentItems[$i_count]['title'] ?>" />
+                </a>
               </p>
               <p><a class="btn" href="<?= base_url("item/index/".$recentItems[$i_count]['id']) ?>">View <?= $fbconfig['itemObjectType'] ?> &raquo;</a></p>
             </div><!--/span-->

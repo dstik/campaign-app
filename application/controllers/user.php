@@ -57,6 +57,7 @@ class User extends CI_Controller {
     try {
       // Let's get the user info and store the user in the DB
       $user_pic = $this->facebook->api('/me/?fields=picture');
+      $profile_user_pic = $this->facebook->api('/'.$profile_id.'/?fields=picture');
 	  } catch (FacebookApiException $e) {
 	    show_error(print_r($e, TRUE), 500);
 	  }
@@ -70,6 +71,7 @@ class User extends CI_Controller {
       'user' => $_SESSION['user'],
       'user_pic' => $user_pic,
       'profile_user' => $profile_user,
+      'profile_user_pic' => $profile_user_pic,
       'profile_user_friends' => $profile_user_friends,
       'profile_user_items' => $profile_user_items
     );

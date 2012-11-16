@@ -1,6 +1,6 @@
 .item_pic {
   text-align: center;
-}  
+}
 
 .item_list .item_data {
   height: 275px;
@@ -17,7 +17,7 @@
   vertical-align: middle;
 }
 
-.item_list .item_data h2 {
+.item_list .item_data h3 {
   overflow: hidden;
   text-overflow: ellipsis;
   -o-text-overflow: ellipsis;

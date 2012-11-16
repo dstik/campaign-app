@@ -1,3 +1,15 @@
+body {
+  padding: 55px;
+}
+
+.navbar .brand {
+  padding-left: 40px;
+}
+
+.navbar .nav.rightmenu {
+  margin-right: 10px;
+}
+
 .loggedinas {
 
 }
@@ -8,6 +20,7 @@
 }
 
 .upload_outer {
+  z-index: 999;
   display: none;
   width: 100%;
   position: absolute;
