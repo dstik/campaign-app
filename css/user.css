@@ -1,0 +1,26 @@
+.friend_list img {
+  height: 24px;
+}
+
+.item_list .item_data {
+  height: 275px;
+}
+
+.item_list .item_data .item_img {
+  text-align: center;
+  height: 162px;
+}
+
+.item_list .item_data img {
+  max-width: 100%;
+  max-height: 162px;
+  vertical-align: middle;
+}
+
+.item_list .item_data h2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
