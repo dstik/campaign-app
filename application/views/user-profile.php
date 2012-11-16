@@ -124,7 +124,7 @@
                     ?>
                     <li>
                       <a href="<?= base_url("/user/index/".$friend['id']) ?>">
-                        <img src="https://graph.facebook.com/<?= $user['id'] ?>/picture" />
+                        <img src="https://graph.facebook.com/<?= $friend['id'] ?>/picture" />
                         <?= $friend['first_name'].' '.$friend['last_name'] ?>
                       </a>
                     </li>
