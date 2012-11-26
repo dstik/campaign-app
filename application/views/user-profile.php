@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# profile: http://ogp.me/ns/profile#">
     <meta charset="utf-8">
     <title><?= $app_name ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta property="fb:app_id" content="<?= $fbconfig['appId'] ?>" />
+    <meta property="og:type"   content="profile" />
+    <meta property="og:url"    content="<?= base_url("user/index/".$profile_user['fb_user_id']) ?>" />
+    <meta property="og:title"  content="<?= $profile_user['first_name'].' '.$profile_user['last_name'] ?>" />
+    <meta property="og:image"  content="<?= $profile_user_pic['picture']['data']['url'] ?>" />
+    <meta property="profile:first_name"      content="<?= $profile_user['first_name'] ?>">
+    <meta property="profile:last_name"       content="<?= $profile_user['last_name'] ?>">
+    <meta property="profile:username"        content="<?= $profile_user['username'] ?>">
+    <meta property="profile:gender"          content="<?= $profile_user['gender'] ?>">
+
 
     <!-- styles -->
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">

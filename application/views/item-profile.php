@@ -11,6 +11,7 @@
     <meta property="og:title"  content="<?= $itemData['title'] ?>" />
     <meta property="og:image"  content="<?= base_url("/files/".$itemData['filename']) ?>" />
     <meta property="og:description" content="<?= $itemData['title'] ?>" />
+    <meta property="platformtraining:author" content="<?= base_url("/user/index/".$item_user['fb_user_id']) ?>" />
 
 
     <!-- styles -->
@@ -98,6 +99,9 @@
                 <h1><?= $itemData['title'] ?></h1>
                 <h6><?= ucfirst($fbconfig['createPastTense']) ?> by <a href="<?= base_url("/user/index/".$item_user['fb_user_id']) ?>"><?= $item_user['first_name']." ".$item_user['last_name'] ?></a></h6>
                 <p>
+                  Vote:
+                </p>
+                <p>
                   <div class="fb-like" data-href="<?= base_url("item/index/".$itemData['id']) ?>" data-send="true" data-width="450" data-show-faces="false"></div>
                 </p>
                 <p><?= $itemData['description'] ?></p>
@@ -106,9 +110,11 @@
                 </p>
               </div>
               <div class="span4 item_pic">
-                <a href="<?= base_url("/files/".$itemData['filename']) ?>" target="_blank">
-                  <img src="<?= base_url("/files/".$itemData['filename']) ?>" alt="<?= $itemData['title'] ?>" />
-                </a>
+                <p>
+                  <a href="<?= base_url("/files/".$itemData['filename']) ?>" target="_blank">
+                    <img src="<?= base_url("/files/".$itemData['filename']) ?>" alt="<?= $itemData['title'] ?>" />
+                  </a>
+                </p>
                 <h5>(Click to Enlarge)</h5>
               </div>
             </div>

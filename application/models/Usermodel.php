@@ -27,7 +27,7 @@ class Usermodel extends CI_Model {
     function addUser($userData, $friends) {
       // Null check
       if(empty($userData)) {
-        return;
+        return false;
       }
       // if user doesn't exist, we will add them
       if(!$this->checkExists($userData->id)) {
@@ -41,6 +41,7 @@ class Usermodel extends CI_Model {
         );
         if(!$this->db->insert('users', $data)) {
           // user exists in DB
+          return false;
         }
 
         // add friends
@@ -60,8 +61,10 @@ class Usermodel extends CI_Model {
             }
           }
         }
+        return true;
+      } else {
+        return false;
       }
-
     }
 
     function getUser($id) {

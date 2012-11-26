@@ -25,6 +25,7 @@ class Welcome extends CI_Controller {
     // Your own constructor code
     $this->load->model('Usermodel');
     $this->load->model('Itemmodel');
+    $this->load->model('Newuserreferralsmodel');
     $this->load->helper('url');
     $this->load->helper('form');
     $this->fbconfig = $this->config->item('fbconfig');
@@ -40,6 +41,7 @@ class Welcome extends CI_Controller {
     $user = $this->facebook->getUser();
     if($user == 0) { $user = null; }
 
+    if(!isset($_SESSION['access_token'])) { $_SESSION['access_token'] = null; }
     if ($user && $_SESSION['access_token']) {
      redirect('/welcome/authed');
      //$this->authed();
@@ -64,7 +66,7 @@ class Welcome extends CI_Controller {
       // We need to create some unique string to preserve state and protect against Cross-Site Request Forgery
       $_SESSION['state'] = md5(uniqid(rand(), TRUE));
       // We need to specify the (comma separated list of) user permissions we're requesting
-      $permissions = $this->config->item('permissions');
+      $permissions = $this->fbconfig['permissions'];
 
       // We'll build the url to the auth dialog
       $dialog_url = "https://www.facebook.com/dialog/oauth?client_id="
@@ -121,7 +123,7 @@ class Welcome extends CI_Controller {
         // We need to create some unique string to preserve state and protect against Cross-Site Request Forgery
         $_SESSION['state'] = md5(uniqid(rand(), TRUE));
         // We need to specify the (comma separated list of) user permissions we're requesting
-        $permissions = $this->config->item('permissions');
+        $permissions = $this->fbconfig['permissions'];
 
         // We'll build the url to the auth dialog
         $dialog_url = "https://www.facebook.com/dialog/oauth?client_id="
@@ -162,15 +164,22 @@ class Welcome extends CI_Controller {
       . $params['access_token'];
       $friends = json_decode(file_get_contents($graph_url), true);
 
-      $this->Usermodel->addUser($userData, $friends);
+      // see if this user is a new user
+      if( $this->Usermodel->addUser($userData, $friends) ){
+        // if this is a new user we will ee if they were referred by another user
+        if(isset($_SESSION['new_user_referrals'])) {
+          $this->Newuserreferralsmodel->addReferral($_SESSION['new_user_referrals']);
+          $_SESSION['new_user_referrals'] = null;
+        }
+      }
 
     } else {
       // See if there is a user from a cookie
   		$user = $this->facebook->getUser();
 
       if (!$user || !$_SESSION['access_token']) {
-  		  echo "no user";
-  		  // redirect('/welcome/index');
+  		  // echo "no user";
+  		  redirect('/welcome/index');
   		}
 
     }

@@ -4,8 +4,11 @@
     <meta charset="utf-8">
     <title><?= $app_name ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta property="fb:app_id" content="<?= $fbconfig['appId'] ?>" />
+    <meta property="og:type"   content="website" />
+    <meta property="og:url"    content="<?= base_url("welcome/index") ?>" />
+    <meta property="og:title"  content="<?= $app_name ?>" />
+    <meta property="og:image"  content="" />
 
     <!-- styles -->
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
@@ -89,15 +92,17 @@
         }
         ?>
         <div class="span6 item_data">
-          <h4>
-            <a href="<?= base_url("item/index/".$recentItems[$i_count]['id']) ?>"><?= $recentItems[$i_count]['title'] ?></a>
-          </h4>
           <p class="item_img">
             <a href="<?= base_url("item/index/".$recentItems[$i_count]['id']) ?>">
-              <img align="middle" src="<?= base_url("/files/".$recentItems[$i_count]['filename']) ?>" alt="<?= $recentItems[$i_count]['title'] ?>" />
+              <img class="item_pic" align="middle" src="<?= base_url("/files/".$recentItems[$i_count]['filename']) ?>" alt="<?= $recentItems[$i_count]['title'] ?>" />
             </a>
           </p>
-          <p><a class="btn" href="<?= base_url("item/index/".$recentItems[$i_count]['id']) ?>">View <?= $fbconfig['itemObjectType'] ?> &raquo;</a></p>
+          <h5>
+            <a href="<?= base_url("item/index/".$recentItems[$i_count]['id']) ?>"><?= $recentItems[$i_count]['title'] ?></a>
+          </h5>
+          <p>
+            <img class="user_pic" src="https://graph.facebook.com/<?= $recentItems[$i_count]['fb_user_id'] ?>/picture" alt="<?= $recentItems[$i_count]['first_name'].' '.$recentItems[$i_count]['last_name'] ?>" /> <?= $recentItems[$i_count]['first_name'].' '.$recentItems[$i_count]['last_name'] ?>
+          </p>
         </div><!--/span-->
         <?
         if($item_counter == 2 || ($i_count == count($recentItems) -1)) {

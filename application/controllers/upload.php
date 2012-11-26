@@ -41,7 +41,9 @@ class Upload extends CI_Controller
           "filename" => $data['file_name'],
           "title" => $_POST['title'],
           "description" => $_POST['description'],
-          "fb_user_id" => $_SESSION['user']['id']
+          "fb_user_id" => $_SESSION['user']['id'],
+          "first_name" => $_SESSION['user']['first_name'],
+          "last_name" => $_SESSION['user']['last_name'],
         );
         $file_id = $this->Itemmodel->insert_file($filedata);
         if($file_id) {
