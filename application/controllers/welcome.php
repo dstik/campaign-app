@@ -44,7 +44,7 @@ class Welcome extends CI_Controller {
     if(!isset($_SESSION['access_token'])) { $_SESSION['access_token'] = null; }
     if ($user && $_SESSION['access_token']) {
      redirect('/welcome/authed');
-     //$this->authed();
+     //$this->authed(); //why is this commented out?
      return;
     }
 
@@ -84,7 +84,7 @@ class Welcome extends CI_Controller {
       'recentItems' => $recentItems
     );
 
-	  $data['dialog_url'] = $dialog_url;
+    $data['dialog_url'] = $dialog_url;
     $this->load->view('unauth-landing', $data);
 
   }

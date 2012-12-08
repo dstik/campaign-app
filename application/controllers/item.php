@@ -39,6 +39,7 @@ class Item extends CI_Controller {
 
     $user = null;
     // See if there is a user from a cookie
+    //NEED To Add If-Statement
 		$user = $this->facebook->getUser();
 
     if (!$user) {

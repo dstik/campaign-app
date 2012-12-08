@@ -55,7 +55,6 @@ class Usermodel extends CI_Model {
                 'friend_id' => $friend['id']
               );
               if(!$this->db->insert('friends', $data)){
-                //echo $friend['id'];
                 break;
               }
             }

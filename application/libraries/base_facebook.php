@@ -81,11 +81,9 @@ class FacebookApiException extends Exception
       if (is_string($error)) {
         // OAuth 2.0 Draft 10 style
         return $error;
-      } else if (is_array($error)) {
+      } else if (is_array($error) && isset($error['type'])) {
         // OAuth 2.0 Draft 00 style
-        if (isset($error['type'])) {
-          return $error['type'];
-        }
+        return $error['type'];
       }
     }
 
@@ -258,7 +256,7 @@ abstract class BaseFacebook
   }
 
   /**
-   * Set the App Secret.
+   * Set the Api Secret.
    *
    * @param string $apiSecret The App Secret
    * @return BaseFacebook
@@ -281,7 +279,7 @@ abstract class BaseFacebook
   }
 
   /**
-   * Get the App Secret.
+   * Get the App (Api) Secret.
    *
    * @return string the App Secret
    * @deprecated

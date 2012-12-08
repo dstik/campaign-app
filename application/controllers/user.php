@@ -37,6 +37,7 @@ class User extends CI_Controller {
 
     $user = null;
     // See if there is a user from a cookie
+    //NEED if statement
 		$user = $this->facebook->getUser();
 
     if (!$user) {
