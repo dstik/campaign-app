@@ -24,10 +24,37 @@
       .sidebar-nav {
         padding: 9px 0;
       }
+
+      div.rateit.bigstars div.rateit-range
+      {
+          background: url("/img/star-empty.png");
+          height: 18px;
+      }
+
+      div.rateit.bigstars div.rateit-hover
+      {
+          background: url("/img/star-full.png");
+      }
+
+      div.rateit.bigstars div.rateit-selected
+      {
+          background: url("/img/star-full-blk.png");
+      }
+
+      div.rateit.bigstars div.rateit-reset:hover
+      {
+          background: url("/img/star-empty-blk.png");
+      }
+
+      .voteCountDescription {
+        font-size: .65em;
+      }
+
     </style>
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="/css/base.css" rel="stylesheet">
     <link href="/css/item.css" rel="stylesheet">
+    <link href="/css/rateit.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -60,7 +87,9 @@
         </form>
       </div>
     </div>
-
+<?php
+if($user) {
+?>
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <a class="brand" href="<?= base_url("/welcome") ?>"><?= $app_name ?></a>
@@ -88,6 +117,9 @@
         </ul>
       </div>
     </div>
+<?php
+}
+?>
 
     <div class="container">
       <div class="row">
@@ -99,10 +131,17 @@
                 <h1><?= $itemData['title'] ?></h1>
                 <h6><?= ucfirst($fbconfig['createPastTense']) ?> by <a href="<?= base_url("/user/index/".$item_user['fb_user_id']) ?>"><?= $item_user['first_name']." ".$item_user['last_name'] ?></a></h6>
                 <p>
-                  Vote:
+                  <div>
+                    Vote:
+                    <div class="rateit bigstars" data-rateit-starwidth="18" data-rateit-starheight="18" data-rateit-resetable="false" <?
+                    if($itemCount) {
+                      ?> data-rateit-value="<?=$itemCount['AVG']?>" data-rateit-ispreset="true" <?
+                    }
+                    ?>></div> <span class="voteCountDescription"><? if($itemCount){ ?>(<?=$itemCount['COUNT']?> votes)<? } ?></span>
+                  </div>
                 </p>
                 <p>
-                  <div class="fb-like" data-href="<?= base_url("item/index/".$itemData['id']) ?>" data-send="true" data-width="450" data-show-faces="false"></div>
+
                 </p>
                 <p><?= $itemData['description'] ?></p>
                 <p>
@@ -116,6 +155,7 @@
                   </a>
                 </p>
                 <h5>(Click to Enlarge)</h5>
+                <div class="fb-like" data-href="<?= base_url("item/index/".$itemData['id']) ?>" data-send="true" data-width="325" data-show-faces="false"></div>
               </div>
             </div>
           </div>
@@ -199,6 +239,30 @@
     <script src="/js/ajaxfileupload.js"></script>
     <script src="/js/base.js"></script>
     <script src="/js/user.js"></script>
-
+    <script src="/js/jquery.rateit.min.js"></script>
+    <script>
+      //we bind only to the rateit controls within the products div
+      $('.rateit').bind('rated', function (e) {
+        var ri = $(this);
+        //if the use pressed reset, it will get value: 0 (to be compatible with the HTML range control), we could check if e.type == 'reset', and then set the value to  null .
+        var value = ri.rateit('value');
+        var productID = <?= $itemData['id'] ?>;
+        // Disable voting
+        ri.rateit('readonly', true);
+        $.ajax({
+          url: '<?= base_url("item/vote") ?>', //your server side script
+          data: { id: productID, value: value }, //our data
+          type: 'POST',
+          success: function (data) {
+            //$('#response').append('<li>' + data + '</li>');
+            //alert(data);
+          },
+          error: function (jxhr, msg, err) {
+            //$('#response').append('<li style="color:red">' + msg + '</li>');
+            alert(msg);
+          }
+        });
+      });
+    </script>
   </body>
 </html>

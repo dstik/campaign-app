@@ -77,29 +77,20 @@ class Usermodel extends CI_Model {
     }
 
     function getFriends($id) {
-        $friend_array = array();
-        $query = $this->db->query("SELECT friends.user_id, friends.friend_id, users.first_name, users.last_name FROM friends, users WHERE friends.user_id = ".$this->db->escape($id)." AND friends.friend_id = users.fb_user_id");
-        if ($query->num_rows() > 0) {
-          foreach ($query->result_array() as $row) {
-            array_push($friend_array, array(
-              'id' => $row['friend_id'],
-              'first_name' => $row['first_name'],
-              'last_name' => $row['last_name']
-            ));
-          }
-          return $friend_array;
-        } else {
-          return false;
+      $friend_array = array();
+      $query = $this->db->query("SELECT friends.user_id, friends.friend_id, users.first_name, users.last_name FROM friends, users WHERE friends.user_id = ".$this->db->escape($id)." AND friends.friend_id = users.fb_user_id");
+      if ($query->num_rows() > 0) {
+        foreach ($query->result_array() as $row) {
+          array_push($friend_array, array(
+            'id' => $row['friend_id'],
+            'first_name' => $row['first_name'],
+            'last_name' => $row['last_name']
+          ));
         }
-    }
-
-    function update_entry()
-    {
-        $this->title   = $_POST['title'];
-        $this->content = $_POST['content'];
-        $this->date    = time();
-
-        $this->db->update('entries', $this, array('id' => $_POST['id']));
+        return $friend_array;
+      } else {
+        return false;
+      }
     }
 
 }

@@ -1,0 +1,3 @@
+Underscorejs
+JQuery
+RateIt (http://rateit.codeplex.com/)

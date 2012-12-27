@@ -25,6 +25,7 @@ class Item extends CI_Controller {
     // Your own constructor code
     $this->load->model('Usermodel');
     $this->load->model('Itemmodel');
+    $this->load->model('Actionmodel');
     $this->load->helper('url');
     $this->load->helper('form');
     // load FB
@@ -36,15 +37,22 @@ class Item extends CI_Controller {
 
 	public function index($item_id=null)
 	{
+	  //echo "{ITEM}".$_COOKIE['new_user_referrals']."{/ITEM}";
 
     $user = null;
-    // See if there is a user from a cookie
-		$user = $this->facebook->getUser();
-
-    if (!$user) {
-      redirect('/welcome/index');
-      return;
+    // See if there is a user from user session
+    if(isset($_SESSION['user'])) {
+      $user = $_SESSION['user'];
     }
+    // see if we can grab it from FB session
+    if(!$user) {
+      try {
+        $user = $this->facebook->getUser();
+      } catch (Exception $e) {
+        $user = null;
+      }
+    }
+
 
     $item = $this->Itemmodel->getItem($item_id);
     if (!$item_id || !$item) {
@@ -55,14 +63,21 @@ class Item extends CI_Controller {
     } else {
       // Do necessary work here for the object
       // pull FP and count of vote actions
+      $itemCount = $this->Actionmodel->getCurrentVote($item_id);
     }
 
     try {
-      // Let's get the user info and store the user in the DB
+      // Let's get the user info from FB
       $user_pic = $this->facebook->api('/me/?fields=picture');
-      $item_user = $this->Usermodel->getUser($item['fb_user_id']);
-      $item_user_pic = $this->facebook->api('/'.$item['fb_user_id'].'/?fields=picture');
 	  } catch (FacebookApiException $e) {
+	    // show_error(print_r($e, TRUE), 500);
+	    $user_pic = false;
+	  }
+
+	  try {
+      $item_user = $this->Usermodel->getUser($item['fb_user_id']);
+      //$item_user_pic = $this->facebook->api('/'.$item['fb_user_id'].'/?fields=picture');
+	  } catch (Exception $e) {
 	    show_error(print_r($e, TRUE), 500);
 	  }
 
@@ -73,16 +88,61 @@ class Item extends CI_Controller {
       'app_name' => $this->config->item('app_name'),
       'fbconfig' => $this->fbconfig,
       'inviteMessage' => $this->config->item('inviteMessage'),
-      'message' => 'My Message',
-      'user' => $_SESSION['user'],
+      'user' => $user,
       'user_pic' => $user_pic,
       'itemData' => $item,
       'item_user' => $item_user,
-      'item_user_pic' => $item_user_pic,
+      'itemCount' => $itemCount,
+      //'item_user_pic' => $item_user_pic,
       'recentItems' => $recentItems
     );
 
 		$this->load->view('item-profile', $data);
 	}
+
+	public function vote()
+	{
+	  // Check user
+	  $user = null;
+    // See if there is a user from user session
+    if(isset($_SESSION['user'])) {
+      $user = $_SESSION['user'];
+    }
+    // see if we can grab it from FB session
+    if(!$user) {
+      try {
+        $user = $this->facebook->getUser();
+      } catch (Exception $e) {
+        $user = null;
+      }
+    }
+    if(!$user) {
+      echo json_encode(array('status' => "error", 'msg' => "Cannot identify user"));
+      return;
+    }
+
+	  if(isset($_POST['id']) && isset($_POST['value'])) {
+      $actiondata = array(
+        "fb_user_id" => $user['id'],
+        "item_id" => $_POST['id'],
+        "vote" => $_POST['value']
+      );
+      $action_id = $this->Actionmodel->addAction($actiondata);
+      if($action_id) {
+        $status = "success";
+        $msg = $action_id;
+        // TODO: NEED TO PUBLISH ACTIONS HERE!
+      } else {
+        $status = "error";
+        $msg = "Something went wrong when logging the vote, please try again later.";
+      }
+	  } else {
+	    $status = "error";
+      $msg = "Something went wrong when logging the vote, please try again later.";
+	  }
+
+	  echo json_encode(array('status' => $status, 'msg' => $msg));
+    return;
+  }
 
 }

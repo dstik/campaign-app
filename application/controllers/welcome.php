@@ -35,6 +35,7 @@ class Welcome extends CI_Controller {
   }
 
   public function index() {
+
     // load user model
     $user = null;
 
@@ -117,7 +118,19 @@ class Welcome extends CI_Controller {
       // The response will look like this:
       //  access_token=USER_ACCESS_TOKEN&expires=NUMBER_OF_SECONDS_UNTIL_TOKEN_EXPIRES
       $response = null;
-      $response = file_get_contents($token_url);
+      // try {
+        $response = file_get_contents($token_url);
+      // } catch(Exception $e) {
+      //         $response = null;
+      //       }
+
+      // check if ACCESS TOKEN is invalidated
+      try {
+  	    $user_pic = $this->facebook->api('/me/?fields=picture');
+  	  } catch (FacebookApiException $e) {
+  	    $response = null;
+  	  }
+
       if(!$response) {
         // back up plan
         // We need to create some unique string to preserve state and protect against Cross-Site Request Forgery
