@@ -87,17 +87,23 @@
         </form>
       </div>
     </div>
-<?php
-if($user) {
-?>
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <a class="brand" href="<?= base_url("/welcome") ?>"><?= $app_name ?></a>
         <ul class="nav">
           <li><a href="<?= base_url("/welcome") ?>">Home</a></li>
+          <?php
+          if($user) {
+          ?>
           <li><a href="#" id="upload_btn">Upload</a></li>
+          <?
+          }
+          ?>
           <li><a href="#about">About</a></li>
         </ul>
+        <?php
+        if($user) {
+        ?>
         <ul class="nav pull-right rightmenu">
           <li id="fat-menu" class="dropdown">
             <a href="#" id="drop3" role="button" class="navbar-link dropdown-toggle loggedinas" data-toggle="dropdown">
@@ -115,11 +121,11 @@ if($user) {
             </ul>
           </li>
         </ul>
+        <?php
+        }
+        ?>
       </div>
     </div>
-<?php
-}
-?>
 
     <div class="container">
       <div class="row">

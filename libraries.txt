@@ -1,3 +1,8 @@
-Underscorejs
-JQuery
-RateIt (http://rateit.codeplex.com/)
+PHP
+ - CodeIgniter
+
+JS
+ - Underscorejs
+ - JQuery
+ - RateIt (http://rateit.codeplex.com/)
+ - Ajax File Uploader w/CodeIgniter: http://net.tutsplus.com/tutorials/javascript-ajax/how-to-upload-files-with-codeigniter-and-ajax/

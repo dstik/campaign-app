@@ -8,7 +8,7 @@
     <meta property="og:type"   content="profile" />
     <meta property="og:url"    content="<?= base_url("user/index/".$profile_user['fb_user_id']) ?>" />
     <meta property="og:title"  content="<?= $profile_user['first_name'].' '.$profile_user['last_name'] ?>" />
-    <meta property="og:image"  content="<?= $profile_user_pic['picture']['data']['url'] ?>" />
+    <meta property="og:image"  content="<?= $profile_user_pic ?>" />
     <meta property="profile:first_name"      content="<?= $profile_user['first_name'] ?>">
     <meta property="profile:last_name"       content="<?= $profile_user['last_name'] ?>">
     <meta property="profile:username"        content="<?= $profile_user['username'] ?>">
@@ -62,14 +62,24 @@
       </div>
     </div>
 
+
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <a class="brand" href="<?= base_url("/welcome") ?>"><?= $app_name ?></a>
         <ul class="nav">
           <li><a href="<?= base_url("/welcome") ?>">Home</a></li>
+          <?php
+          if($user) {
+          ?>
           <li><a href="#" id="upload_btn">Upload</a></li>
+          <?
+          }
+          ?>
           <li><a href="#about">About</a></li>
         </ul>
+        <?php
+        if($user) {
+        ?>
         <ul class="nav pull-right rightmenu">
           <li id="fat-menu" class="dropdown">
             <a href="#" id="drop3" role="button" class="navbar-link dropdown-toggle loggedinas" data-toggle="dropdown">
@@ -87,6 +97,9 @@
             </ul>
           </li>
         </ul>
+        <?php
+        }
+        ?>
       </div>
     </div>
 
@@ -96,7 +109,7 @@
           <div class="hero-unit">
             <h1>
               <div class="userphoto">
-                <span style="background-image: url(<?= $profile_user_pic['picture']['data']['url'] ?>)"></span>
+                <span style="background-image: url(<?= $profile_user_pic ?>)"></span>
               <?= $profile_user['first_name'] ?>'s Profile
               </div>
             </h1>

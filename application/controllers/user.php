@@ -36,18 +36,25 @@ class User extends CI_Controller {
 	{
 
     $user = null;
-    // See if there is a user from a cookie
-		$user = $this->facebook->getUser();
-
-    if (!$user) {
-      redirect('/welcome/index');
-      return;
+    // See if there is a user from user session
+    if(isset($_SESSION['user'])) {
+      $user = $_SESSION['user'];
+    }
+    // see if we can grab it from FB session
+    if(!$user) {
+      try {
+        $user = $this->facebook->getUser();
+      } catch (Exception $e) {
+        $user = null;
+      }
     }
 
     $profile_user = $this->Usermodel->getUser($profile_id);
     $profile_user_friends = array();
     if (!$profile_user) {
-      redirect('/welcome/index');
+      //redirect('/welcome/index');
+      echo "aa";
+      exit();
       return;
     } else {
       $profile_user_friends = $this->Usermodel->getFriends($profile_id);
@@ -55,11 +62,14 @@ class User extends CI_Controller {
     }
 
     try {
-      // Let's get the user info and store the user in the DB
+      // Let's get the user info from FB
       $user_pic = $this->facebook->api('/me/?fields=picture');
       $profile_user_pic = $this->facebook->api('/'.$profile_id.'/?fields=picture');
+      $profile_user_pic = $profile_user_pic['picture']['data']['url'];
 	  } catch (FacebookApiException $e) {
-	    show_error(print_r($e, TRUE), 500);
+	    //show_error(print_r($e, TRUE), 500);
+	    $user_pic = false;
+      $profile_user_pic = "https://graph.facebook.com/".$profile_id."/picture";
 	  }
 
     $data = array(
@@ -68,7 +78,7 @@ class User extends CI_Controller {
       'fbconfig' => $this->fbconfig,
       'inviteMessage' => $this->config->item('inviteMessage'),
       'message' => 'My Message',
-      'user' => $_SESSION['user'],
+      'user' => $user,
       'user_pic' => $user_pic,
       'profile_user' => $profile_user,
       'profile_user_pic' => $profile_user_pic,
