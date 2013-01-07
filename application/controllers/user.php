@@ -64,11 +64,16 @@ class User extends CI_Controller {
     try {
       // Let's get the user info from FB
       $user_pic = $this->facebook->api('/me/?fields=picture');
+      $user_pic = $user_pic['picture']['data']['url'];
       $profile_user_pic = $this->facebook->api('/'.$profile_id.'/?fields=picture');
       $profile_user_pic = $profile_user_pic['picture']['data']['url'];
 	  } catch (FacebookApiException $e) {
 	    //show_error(print_r($e, TRUE), 500);
-	    $user_pic = false;
+	    if($user){
+	      $user_pic = "https://graph.facebook.com/".$user['id']."/picture";
+	    } else {
+	      $user_pic = false;
+	    }
       $profile_user_pic = "https://graph.facebook.com/".$profile_id."/picture";
 	  }
 

@@ -84,7 +84,7 @@
           <li id="fat-menu" class="dropdown">
             <a href="#" id="drop3" role="button" class="navbar-link dropdown-toggle loggedinas" data-toggle="dropdown">
               <!-- <a href="<?= base_url("/user/index/".$user['id']) ?>" class="" data-toggle="dropdown"> -->
-              <img src="<?= $user_pic['picture']['data']['url'] ?>" alt="<?= $user['name'] ?>" />
+              <img src="<?= $user_pic ?>" alt="<?= $user['name'] ?>" />
               <?= $user['name'] ?>
               <b class="caret"></b>
             </a>
